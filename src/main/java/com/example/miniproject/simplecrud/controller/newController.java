@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/home")
+@RequestMapping(value = "/miniCRUD")
 public class newController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class newController {
     @Autowired
     responseGenerator responseAPI;
 
-     @GetMapping(value = "hello")
+     @GetMapping(value = "mainPage")
     public responseData<String> Hello() {
          return responseAPI.successResponse("Hello", "success");
      }
@@ -55,13 +55,16 @@ public class newController {
 
      }
 
-     @PatchMapping(value = "updateUser")
-    public responseData<String> updateUser (@RequestBody newEntities param, @RequestParam int id){
+     @PatchMapping(
+             value = "updateUser",
+             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+             )
+    public responseData<String> updateUser (newEntities param, @RequestParam int id){
 //         newRepositories.updateData(param, id);
          param.id = id;
          newRepositories.save(param);
 //         return responseAPI.successResponse(param, "Sukses update pada ID : "+id);
-         return responseAPI.successResponse(param, "pada ID "+id);
+         return responseAPI.successResponse(param, "Update pada ID "+id);
      }
 
      @DeleteMapping(value = "deleteUser")

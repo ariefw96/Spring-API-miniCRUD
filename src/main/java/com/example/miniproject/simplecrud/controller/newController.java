@@ -48,7 +48,9 @@ public class newController {
 
     @GetMapping(value = "getUserById")
     public responseData<newEntities> getUserById(@RequestParam int id) {
-        newEntities data = newRepositories.findById(id).get();
+//        newEntities data = newRepositories.findById(id).get();
+
+        newEntities data = newRepositories.getSingleData(id);
 
         return responseAPI.successResponse(data, "Sukses mendapatkan data");
 
@@ -59,17 +61,18 @@ public class newController {
             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
     )
     public responseData<String> updateUser(newEntities param, @RequestParam int id) {
-//         newRepositories.updateData(param, id);
-        param.id = id;
+        System.out.println(param);
+        param.id=id;
+//        newRepositories.updateData(param,id);
         newRepositories.save(param);
-//         return responseAPI.successResponse(param, "Sukses update pada ID : "+id);
-        return responseAPI.successResponse(param, "Update pada ID " + id);
+        return responseAPI.successResponse(param, "Sukses update pada ID " + id);
     }
 
     @DeleteMapping(value = "deleteUser")
     public responseData<String> deleteUser(@RequestParam int id) {
         newEntities data = newRepositories.findById(id).get();
-        newRepositories.deleteById(id);
+//        newRepositories.deleteById(id);
+        newRepositories.deleteSingleData(id);
         return responseAPI.successResponse(data, "Sukses menghapus data pada ID : " + id);
     }
 }

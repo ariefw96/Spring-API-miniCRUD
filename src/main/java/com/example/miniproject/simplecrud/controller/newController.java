@@ -1,7 +1,6 @@
 package com.example.miniproject.simplecrud.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.miniproject.simplecrud.repositories.newRepositories;
 import com.example.miniproject.simplecrud.response.responseData;
@@ -23,54 +22,54 @@ public class newController {
     @Autowired
     responseGenerator responseAPI;
 
-     @GetMapping(value = "mainPage")
+    @GetMapping(value = "mainPage")
     public responseData<String> Hello() {
-         return responseAPI.successResponse("Hello", "success");
-     }
+        return responseAPI.successResponse("Hello", "success");
+    }
 
 
-     @PostMapping(
-             value = "addNewUser",
-             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
-     )
-    public responseData<String> addNewUser(newEntities param){
+    @PostMapping(
+            value = "addNewUser",
+            consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+    )
+    public responseData<String> addNewUser(newEntities param) {
 
-         newRepositories.save(param);
-         return responseAPI.successResponse(param, "success menambahkan data baru");
-     }
+        newRepositories.save(param);
+        return responseAPI.successResponse(param, "success menambahkan data baru");
+    }
 
-     @GetMapping(value = "getAllUser")
-    public responseData<List<newEntities>> getAllUser(){
+    @GetMapping(value = "getAllUser")
+    public responseData<List<newEntities>> getAllUser() {
 
-         ArrayList arrayList = newRepositories.getAllData();
+        ArrayList arrayList = newRepositories.getAllData();
 
-         return  responseAPI.successResponse(arrayList, "Succes get All User");
-     }
+        return responseAPI.successResponse(arrayList, "Succes get All User");
+    }
 
-     @GetMapping(value = "getUserById")
-    public  responseData<newEntities> getUserById (@RequestParam int id){
-         newEntities data = newRepositories.findById(id).get();
+    @GetMapping(value = "getUserById")
+    public responseData<newEntities> getUserById(@RequestParam int id) {
+        newEntities data = newRepositories.findById(id).get();
 
-         return responseAPI.successResponse(data, "Sukses mendapatkan data");
+        return responseAPI.successResponse(data, "Sukses mendapatkan data");
 
-     }
+    }
 
-     @PatchMapping(
-             value = "updateUser",
-             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
-             )
-    public responseData<String> updateUser (newEntities param, @RequestParam int id){
+    @PatchMapping(
+            value = "updateUser",
+            consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+    )
+    public responseData<String> updateUser(newEntities param, @RequestParam int id) {
 //         newRepositories.updateData(param, id);
-         param.id = id;
-         newRepositories.save(param);
+        param.id = id;
+        newRepositories.save(param);
 //         return responseAPI.successResponse(param, "Sukses update pada ID : "+id);
-         return responseAPI.successResponse(param, "Update pada ID "+id);
-     }
+        return responseAPI.successResponse(param, "Update pada ID " + id);
+    }
 
-     @DeleteMapping(value = "deleteUser")
-    public responseData<String> deleteUser(@RequestParam int id){
-         newEntities data = newRepositories.findById(id).get();
-         newRepositories.deleteById(id);
-         return responseAPI.successResponse(data, "Sukses menghapus data pada ID : "+id);
-     }
+    @DeleteMapping(value = "deleteUser")
+    public responseData<String> deleteUser(@RequestParam int id) {
+        newEntities data = newRepositories.findById(id).get();
+        newRepositories.deleteById(id);
+        return responseAPI.successResponse(data, "Sukses menghapus data pada ID : " + id);
+    }
 }
